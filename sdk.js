@@ -72,3 +72,6 @@ function parse(lang, filename) {
 }
 
 exports.meta = meta;
+exports.parse = parse;
+exports.makeTransferFile = makeTransferFile;
+exports.convert = convert;

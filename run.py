@@ -32,9 +32,22 @@ if target == "python3":
 
 elif target == "javascript":
     code.write("""const sdk = require('./sdk');
-    var d = parse(%s, %s);
+    var d = sdk.parse('%s', '%s');
     for (key of Object.keys(d)) {
-        global[key] = d[key];
+        eval(`${key} = d['${key}'];`);
     }
-    """ % (source, inputFileName)
+    """ % (source, inputFileName))
+
+    code.write(codeFile.read())
+    codeFile.close()
+
+    outputDict = "{"
+    for name in outputs:
+        outputDict += "'%s':%s," % (name, name)
+    outputDict = outputDict[:len(outputDict)-1] + '}' #Replaces extra last comma with closing bracket
+    code.write("\nsdk.makeTransferFile(" + outputDict + ");")
+    code.close()
+    rename(code.name, codeFile.name)
+
+    subprocess.run("node " + codeFile.name, shell=True)
     #THIS IS WHERE I LEFT OFF. SHOULD PROBABLY SWITCH THE ABOVE TO MULTILINE STRINGS.

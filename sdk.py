@@ -1,15 +1,19 @@
 from subprocess import run
+from functools import reduce
 
 delimiter = ":"
 fileEndings = {'javascript':'js'}
 
 def meta(code:str, lang:str, input:dict, output:list):
     #1) Make codefile
-    codeFile = open("code." + fileEndings[lang], 'w').close()
+    codeFile = open("code." + fileEndings[lang], 'w')
+    codeFile.write(code)
+    codeFile.close()
     #2) Make transfer file
     makeTransferFile(input)
     #3) Run execute with run.py
-    print(run("python3 run.py transfer.txt python3 %s code.%s %s" % (lang, fileEndings[lang], output), shell=True))
+    outputArgs = reduce(lambda a,b:a+b+" ",output)
+    print(run("python3 run.py transfer.txt python3 %s code.%s %s" % (lang, fileEndings[lang], outputArgs), shell=True))
     #4) Parse output
     return parse(lang, "transfer.txt")
 

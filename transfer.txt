@@ -1,1 +1,1 @@
-old:str:this is a string
+neww:string:th
