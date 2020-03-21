@@ -1,0 +1,4 @@
+You should do all your data passing between languages with piping instead of files probably. You can just pass large multiline strings and I think it would work, or maybe json would be better.
+A META SDK for each language so for example you could write code in other languages all in a .js file by calling meta("c=a+b", python, ["a","b"], [c]);
+Because of the fact that you are passing data back and forth in the middle of runtimes, piping probably won't work. It would only work for sequential, non-nested language blocks. But if piping is really just a buffered input, then maybe you could make your own version of this. Or maybe writing files really is just as fast.
+Add error logging all throughout everything, because there is none of it rn.

@@ -1,0 +1,9 @@
+#javascript()>
+
+const f = (a, b) => {
+    #>python(a, b)
+    c = a + b
+    <(c)#
+    return c;
+}
+<()#
