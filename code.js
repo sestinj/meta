@@ -3,5 +3,14 @@ const sdk = require('./sdk');
     for (key of Object.keys(d)) {
         eval(`${key} = d['${key}'];`);
     }
-    const neww = old.substr(0, 2);
-sdk.makeTransferFile({'neww':neww});
+    const f = (a, b) => {
+const meta = require('./sdk').meta
+__d__=meta(`    c = a + b
+`, 'python3', {'a':a, 'b':b,}, ['c']);
+for (key of Object.keys(__d__)) { eval(key + ' = __d__[' + key + ']'); }
+    return c;
+}
+const g = f(2,3);
+console.log(g);
+
+sdk.makeTransferFile({});

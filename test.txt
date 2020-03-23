@@ -1,9 +1,12 @@
-#javascript()>
-
-const f = (a, b) => {
-    #>python(a, b)
-    c = a + b
-    <(c)#
+from sdk import meta
+__d__=meta('''const f = (a, b) => {
+const meta = require('./sdk').meta
+__d__=meta(`    c = a + b
+`, 'python3', {'a':a, 'b':b,}, ['c']);
+for (key of Object.keys(__d__)) { eval(key + ' = __d__[' + key + ']'); }
     return c;
 }
-<()#
+const g = f(2,3);
+console.log(g);
+''', 'javascript', {}, [])
+for key in __d__.keys(): exec(key + ' = __d__[' + key + ']')

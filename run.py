@@ -23,7 +23,11 @@ if target == "python3":
     outputDict = "{"
     for name in outputs:
         outputDict += "'%s':vars()['%s']," % (name, name)
-    outputDict = outputDict[:len(outputDict)-1] + '}' #Replaces extra last comma with closing bracket
+    if len(outputs):
+        outputDict = outputDict[:len(outputDict)-1] + '}' #Replaces extra last comma with closing bracket
+    else:
+        outputDict += "}"
+    
     code.write("\nmakeTransferFile(" + outputDict + ")")
     code.close()
     rename(code.name, codeFile.name)
@@ -44,7 +48,10 @@ elif target == "javascript":
     outputDict = "{"
     for name in outputs:
         outputDict += "'%s':%s," % (name, name)
-    outputDict = outputDict[:len(outputDict)-1] + '}' #Replaces extra last comma with closing bracket
+    if len(outputs):
+        outputDict = outputDict[:len(outputDict)-1] + '}' #Replaces extra last comma with closing bracket
+    else:
+        outputDict += "}"
     code.write("\nsdk.makeTransferFile(" + outputDict + ");")
     code.close()
     rename(code.name, codeFile.name)

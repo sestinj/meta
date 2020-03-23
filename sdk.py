@@ -12,7 +12,11 @@ def meta(code:str, lang:str, input:dict, output:list):
     #2) Make transfer file
     makeTransferFile(input)
     #3) Run execute with run.py
-    outputArgs = reduce(lambda a,b:a+b+" ",output)
+    if output:
+        #Can't reduce an empty array
+        outputArgs = reduce(lambda a,b:a+b+" ",output)
+    else:
+        outputArgs = ""
     print(run("python3 run.py transfer.txt python3 %s code.%s %s" % (lang, fileEndings[lang], outputArgs), shell=True))
     #4) Parse output
     return parse(lang, "transfer.txt")
@@ -41,15 +45,8 @@ def parse(lang:str, filename:str):
         name = components[0]
         typ = components[1]
         data = components[2]
-        if typ == "string":
-            variables[name] = str(data)
-        elif typ == "number":
-            if "." in data:
-                variables[name] = float(data)
-            else:
-                variables[name] = int(data)
-        else:
-            print("Unsupported type from javascript to python3: " + str(typ))
+        if not name == '': #Don't make a ghost variable for extra blank lines
+            variables[name] = convert(lang, typ, data)
     
     return variables #Need to figure out how to get this into the globals() of code.py
 

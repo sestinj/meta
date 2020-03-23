@@ -25,6 +25,7 @@ function makeTransferFile(input) {
 }
 
 async function meta(code, lang, input, output) {
+
     const codeFile = fs.writeFile("code." + fileEndings[lang], code, (err) => {
         if (err) throw "Error writing to input file: " + err.message;
     });
@@ -66,7 +67,10 @@ function parse(lang, filename) {
     for (line of lines) {
         //Process line of output file
         const comps = line.split(fileDelimiter);
-        variables[comps[0]] = convert(lang, comps[1], comps[2]);
+        if (comps[0] != '') {
+            //Don't make a ghost variable for extra blank lines
+            variables[comps[0]] = convert(lang, comps[1], comps[2]);
+        }
     }
     return variables;
 }

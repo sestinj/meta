@@ -1,4 +1,4 @@
-function build() {
+function metabuild() {
     #$1 is the file name
-    python3 parse.py $1
+    python3 base.py $1
 }
