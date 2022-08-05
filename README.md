@@ -6,7 +6,7 @@ Using a .meta file:
 #javascript()>
 
 const f = (a, b) => {
-    #>python(a, b)
+    #python(a, b)>
     c = a + b
     <(c)#
     return c;
